@@ -60,6 +60,8 @@ function placeMines() {
         let minePos = possiblePositions.splice(randIndex, 1)[0];
         mineLocations.push(minePos);
     }
+
+    document.getElementById("goldLeft").innerText = 25 - mineCount;
 }
 
 function revealTile(index) {
