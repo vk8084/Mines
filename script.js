@@ -1,8 +1,10 @@
 let balance = parseInt(localStorage.getItem("balance"));
 if (isNaN(balance)) {
-    balance = 100; // Default balance
+    balance = 100;
     localStorage.setItem("balance", balance);
 }
+document.getElementById("balance").innerText = balance;
+
 let board = [];
 let mineLocations = [];
 let revealedTiles = 0;
@@ -11,11 +13,8 @@ let betAmount = 10;
 let mineCount = 3;
 let bgMusic = document.getElementById("bgMusic");
 
-// Ensure bg.mp3 always plays
 bgMusic.volume = 0.5;
 bgMusic.play();
-
-document.getElementById("balance").innerText = balance;
 
 function startGame() {
     let grid = document.getElementById("grid");
@@ -81,7 +80,7 @@ function revealTile(index) {
         let winSound = document.getElementById("winSound");
         winSound.playbackRate = 1.75;
         winSound.play();
-        
+
         board[index].innerHTML = "🌟";
         board[index].classList.add("clicked");
         revealedTiles++;
@@ -90,11 +89,7 @@ function revealTile(index) {
 }
 
 function updateMultiplier() {
-    if (revealedTiles === 1) {
-        multiplier = 1;
-    } else {
-        multiplier *= (mineCount === 1) ? 1.2 : 1.4;
-    }
+    multiplier *= mineCount === 1 ? 1.2 : 1.4;
     document.getElementById("winningAmount").innerText = "💲" + Math.floor(betAmount * multiplier);
 }
 
@@ -116,8 +111,4 @@ function showLoseScreen() {
             startGame();
         }, 1000);
     }, 500);
-}
-
-function toggleSound() {
-    bgMusic.paused ? bgMusic.play() : bgMusic.pause();
 }
