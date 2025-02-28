@@ -72,7 +72,10 @@ function revealTile(index) {
         document.getElementById("cashOut").disabled = true;
         showLoseScreen();
     } else {
-        document.getElementById("winSound").play();
+        let winSound = document.getElementById("winSound");
+        winSound.playbackRate = 1.75;
+        winSound.play();
+        
         board[index].innerHTML = "🌟";
         board[index].classList.add("clicked");
         revealedTiles++;
@@ -110,11 +113,5 @@ function showLoseScreen() {
 }
 
 function toggleSound() {
-    if (bgMusic.paused) {
-        bgMusic.play();
-        document.getElementById("soundToggle").innerText = "🔊";
-    } else {
-        bgMusic.pause();
-        document.getElementById("soundToggle").innerText = "🔇";
-    }
+    bgMusic.paused ? bgMusic.play() : bgMusic.pause();
 }
