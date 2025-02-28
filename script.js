@@ -7,6 +7,10 @@ let betAmount = 10;
 let mineCount = 3;
 let bgMusic = document.getElementById("bgMusic");
 
+// Ensure bg.mp3 always plays
+bgMusic.volume = 0.5;
+bgMusic.play();
+
 document.getElementById("balance").innerText = balance;
 
 function startGame() {
@@ -16,6 +20,8 @@ function startGame() {
     mineLocations = [];
     revealedTiles = 0;
     multiplier = 1;
+    document.getElementById("winningAmount").innerText = "💲0";
+    document.getElementById("cashOut").disabled = false;
 
     mineCount = parseInt(document.getElementById("mineCount").value);
     betAmount = parseInt(document.getElementById("betAmount").value);
@@ -63,6 +69,7 @@ function revealTile(index) {
         document.getElementById("loseSound").play();
         board[index].innerHTML = "💣";
         board[index].classList.add("mine");
+        document.getElementById("cashOut").disabled = true;
         showLoseScreen();
     } else {
         document.getElementById("winSound").play();
@@ -74,12 +81,22 @@ function revealTile(index) {
 }
 
 function updateMultiplier() {
-    multiplier += mineCount / 10;
-    document.getElementById("winningAmount").innerText = "💲" + Math.floor(betAmount * multiplier);
-
-    if (revealedTiles + mineCount === 25) {
-        winGame(Math.floor(betAmount * multiplier));
+    if (revealedTiles === 1) {
+        multiplier = 1;
+    } else {
+        multiplier *= (mineCount === 1) ? 1.2 : 1.4;
     }
+    document.getElementById("winningAmount").innerText = "💲" + Math.floor(betAmount * multiplier);
+}
+
+function cashOut() {
+    let winnings = Math.floor(betAmount * multiplier);
+    balance += winnings;
+    localStorage.setItem("balance", balance);
+    document.getElementById("balance").innerText = balance;
+    document.getElementById("winningAmount").innerText = "💲0";
+    document.getElementById("cashOut").disabled = true;
+    startGame();
 }
 
 function showLoseScreen() {
@@ -92,13 +109,6 @@ function showLoseScreen() {
     }, 500);
 }
 
-function winGame(amount) {
-    balance += amount;
-    localStorage.setItem("balance", balance);
-    document.getElementById("balance").innerText = balance;
-    startGame();
-}
-
 function toggleSound() {
     if (bgMusic.paused) {
         bgMusic.play();
@@ -106,15 +116,5 @@ function toggleSound() {
     } else {
         bgMusic.pause();
         document.getElementById("soundToggle").innerText = "🔇";
-    }
-}
-
-function applyCheat() {
-    let cheatCode = document.getElementById("cheatCode").value;
-    let match = cheatCode.match(/^vansh(\d+)$/);
-    if (match) {
-        balance += parseInt(match[1]);
-        localStorage.setItem("balance", balance);
-        document.getElementById("balance").innerText = balance;
     }
 }
