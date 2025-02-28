@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mines & Gold</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Mines & Gold</h1>
+        <p id="winning-amount">Winning Price: <span id="winAmount">0</span></p>
+        <p>Balance: <span id="balance">100</span></p>
+
+        <label>Mines (💣): 
+            <input type="number" id="mineCount" min="1" max="20" value="5">
+        </label>
+        <label>Bet Amount: 
+            <input type="number" id="betAmount" min="10" value="10">
+        </label>
+        <button onclick="startGame()">Start Game</button>
+
+        <div id="grid"></div>
+
+        <p>Multiplier: <span id="multiplier">1x</span></p>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
