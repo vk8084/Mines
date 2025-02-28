@@ -14,16 +14,16 @@
     </div>
 
     <div class="game-info">
-        <p>Balance: 💲<span id="balance">100</span></p>
-        <p>Gold Left: <span id="goldLeft">⛔️</span></p>
-        <p>Bet: 💲<input type="number" id="betAmount" min="1" value="10"></p>
+        <p>💲Balance: <span id="balance">100</span></p>
+        <p>🌟 Gold Left: <span id="goldLeft">0</span></p>
+        <p>🎲 Bet: <input type="number" id="betAmount" min="1" value="10"></p>
     </div>
 
     <div id="grid"></div>
 
     <div class="bottom-info">
         <p id="winningAmount">💲0</p>
-        <label>Mines:
+        <label>💣 Mines:
             <select id="mineCount">
                 <option value="1">1</option>
                 <option value="3" selected>3</option>
@@ -36,7 +36,7 @@
         </label>
     </div>
 
-    <button onclick="startGame()">Start Game</button>
+    <button onclick="startGame()">▶ Start Game</button>
     <button id="cashOut" onclick="cashOut()" disabled>💲 Cash Out</button>
 
     <div id="cheatMenu">
@@ -44,7 +44,7 @@
         <button onclick="applyCheat()">Apply</button>
     </div>
 
-    <div id="loseScreen">LOSE 😭</div>
+    <div id="loseScreen">❌ LOSE 😭</div>
 
     <audio id="bgMusic" src="bg.mp3" loop></audio>
     <audio id="winSound" src="win.mp3"></audio>
