@@ -7,36 +7,47 @@
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <div class="game-container">
+    <div class="top-bar">
+        <img src="logo.png" alt="Logo" class="logo">
         <h1>Mines & Gold</h1>
-        <p id="winning-amount">Winning: <span id="winAmount">0</span></p>
-        <p>Balance: <span id="balance">💲100</span></p>
-
-        <div class="controls">
-            <label>Mines:
-                <select id="mineCount">
-                    <option value="1">1</option>
-                    <option value="2">2</option>
-                    <option value="3" selected>3</option>
-                    <option value="4">4</option>
-                    <option value="5">5</option>
-                    <option value="6">6</option>
-                    <option value="7">7</option>
-                    <option value="8">8</option>
-                    <option value="9">9</option>
-                    <option value="10">10</option>
-                </select>
-            </label>
-            <label>Bet: 
-                <input type="number" id="betAmount" min="10" value="10">
-            </label>
-            <button onclick="startGame()">Start Game</button>
-        </div>
-
-        <div id="grid"></div>
-
-        <p>Multiplier: <span id="multiplier">1x</span></p>
+        <button id="soundToggle" onclick="toggleSound()">🔊</button>
     </div>
+
+    <div class="game-info">
+        <p>Balance: 💲<span id="balance">100</span></p>
+        <p>Gold Left: <span id="goldLeft">⛔️</span></p>
+        <p>Bet: 💲<input type="number" id="betAmount" min="1" value="10"></p>
+    </div>
+
+    <div id="grid"></div>
+
+    <div class="bottom-info">
+        <p id="winningAmount">💲0</p>
+        <label>Mines:
+            <select id="mineCount">
+                <option value="1">1</option>
+                <option value="3" selected>3</option>
+                <option value="5">5</option>
+                <option value="10">10</option>
+                <option value="15">15</option>
+                <option value="20">20</option>
+                <option value="24">24</option>
+            </select>
+        </label>
+    </div>
+
+    <button onclick="startGame()">Start Game</button>
+
+    <div id="cheatMenu">
+        <input type="text" id="cheatCode" placeholder="Enter cheat">
+        <button onclick="applyCheat()">Apply</button>
+    </div>
+
+    <div id="loseScreen">LOSE 😭</div>
+
+    <audio id="bgMusic" src="bg.mp3" loop></audio>
+    <audio id="winSound" src="win.mp3"></audio>
+    <audio id="loseSound" src="bang.mp3"></audio>
 
     <script src="script.js"></script>
 </body>
