@@ -5,8 +5,9 @@ let revealedTiles = 0;
 let multiplier = 1;
 let betAmount = 10;
 let mineCount = 3;
+let bgMusic = document.getElementById("bgMusic");
 
-document.getElementById("balance").innerText = `💲${balance}`;
+document.getElementById("balance").innerText = balance;
 
 function startGame() {
     let grid = document.getElementById("grid");
@@ -26,7 +27,7 @@ function startGame() {
 
     balance -= betAmount;
     localStorage.setItem("balance", balance);
-    document.getElementById("balance").innerText = `💲${balance}`;
+    document.getElementById("balance").innerText = balance;
 
     generateBoard();
 }
@@ -59,10 +60,12 @@ function revealTile(index) {
     if (board[index].classList.contains("clicked")) return;
 
     if (mineLocations.includes(index)) {
+        document.getElementById("loseSound").play();
         board[index].innerHTML = "💣";
         board[index].classList.add("mine");
-        showFullGrid();
+        showLoseScreen();
     } else {
+        document.getElementById("winSound").play();
         board[index].innerHTML = "🌟";
         board[index].classList.add("clicked");
         revealedTiles++;
@@ -72,39 +75,46 @@ function revealTile(index) {
 
 function updateMultiplier() {
     multiplier += mineCount / 10;
-    document.getElementById("multiplier").innerText = multiplier.toFixed(1) + "x";
-
-    let potentialWinnings = Math.floor(betAmount * multiplier);
-    document.getElementById("winAmount").innerText = potentialWinnings;
+    document.getElementById("winningAmount").innerText = "💲" + Math.floor(betAmount * multiplier);
 
     if (revealedTiles + mineCount === 25) {
-        winGame(potentialWinnings);
+        winGame(Math.floor(betAmount * multiplier));
     }
 }
 
-function showFullGrid() {
+function showLoseScreen() {
     setTimeout(() => {
-        board.forEach((tile, index) => {
-            if (mineLocations.includes(index)) {
-                tile.innerHTML = "💣";
-                tile.classList.add("mine");
-            } else if (!tile.classList.contains("clicked")) {
-                tile.innerHTML = "🌟";
-                tile.classList.add("gold");
-            }
-        });
+        document.getElementById("loseScreen").style.display = "block";
+        setTimeout(() => {
+            document.getElementById("loseScreen").style.display = "none";
+            startGame();
+        }, 1000);
     }, 500);
-
-    setTimeout(() => {
-        alert("💥 You hit a mine! Bet lost.");
-        startGame();
-    }, 1500);
 }
 
 function winGame(amount) {
-    alert("🎉 You won " + amount + " points!");
     balance += amount;
     localStorage.setItem("balance", balance);
-    document.getElementById("balance").innerText = `💲${balance}`;
+    document.getElementById("balance").innerText = balance;
     startGame();
+}
+
+function toggleSound() {
+    if (bgMusic.paused) {
+        bgMusic.play();
+        document.getElementById("soundToggle").innerText = "🔊";
+    } else {
+        bgMusic.pause();
+        document.getElementById("soundToggle").innerText = "🔇";
+    }
+}
+
+function applyCheat() {
+    let cheatCode = document.getElementById("cheatCode").value;
+    let match = cheatCode.match(/^vansh(\d+)$/);
+    if (match) {
+        balance += parseInt(match[1]);
+        localStorage.setItem("balance", balance);
+        document.getElementById("balance").innerText = balance;
+    }
 }
