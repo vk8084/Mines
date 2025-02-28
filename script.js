@@ -1,4 +1,8 @@
-let balance = localStorage.getItem("balance") ? parseInt(localStorage.getItem("balance")) : 100;
+let balance = parseInt(localStorage.getItem("balance"));
+if (isNaN(balance)) {
+    balance = 100; // Default balance
+    localStorage.setItem("balance", balance);
+}
 let board = [];
 let mineLocations = [];
 let revealedTiles = 0;
